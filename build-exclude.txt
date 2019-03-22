@@ -1,0 +1,8 @@
+.idea/*
+.git/*
+./build/*
+.gitignore
+.gitlab-ci.yml
+build.sh
+build-exclude.txt
+composer.lock

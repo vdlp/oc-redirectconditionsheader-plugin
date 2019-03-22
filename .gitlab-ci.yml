@@ -1,0 +1,3 @@
+deploy:
+    script:
+        - curl --insecure -X POST $PACKAGES_TRIGGER_PIPELINE_URL
