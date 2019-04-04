@@ -1,2 +1,4 @@
 1.0.0:
     - First version of Vdlp.RedirectConditionsHeader
+1.0.1:
+    - Fix issue with parameters check

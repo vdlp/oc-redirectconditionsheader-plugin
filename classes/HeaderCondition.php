@@ -65,8 +65,13 @@ class HeaderCondition extends Condition
      */
     public function passes(RedirectRule $rule, string $requestUri): bool
     {
-        $properties = $this->getParameters($rule->getId());
-        $header = $properties['header'] ?? '';
+        $parameters = $this->getParameters($rule->getId());
+
+        if (empty($parameters)) {
+            return true;
+        }
+
+        $header = $parameters['header'] ?? '';
 
         if ($this->request->hasHeader($header)) {
             $headerValue = $this->request->header($header);
@@ -76,9 +81,9 @@ class HeaderCondition extends Condition
                 return false;
             }
 
-            $matchValue = (string) ($properties['value'] ?? '');
+            $matchValue = (string) ($parameters['value'] ?? '');
 
-            if ((bool) ($properties['use_regex'] ?? false)) {
+            if ((bool) ($parameters['use_regex'] ?? false)) {
                 try {
                     return preg_match($matchValue, $headerValue) === 1;
                 } catch (\Throwable $e) {
