@@ -1,3 +1,7 @@
-deploy:
-    script:
-        - curl --insecure -X POST $PACKAGES_TRIGGER_PIPELINE_URL
+include:
+    -   project: 'standards/gitlab-ci-templates'
+        ref: master
+        file: 'templates/package.yml'
+
+deploy-package:
+    extends: .deploy-package
