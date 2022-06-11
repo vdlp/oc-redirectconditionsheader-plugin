@@ -8,26 +8,13 @@ use System\Classes\PluginBase;
 use Vdlp\Redirect\Classes\Contracts\RedirectManagerInterface;
 use Vdlp\RedirectConditionsHeader\Classes\HeaderCondition;
 
-/**
- * Class Plugin
- *
- * @package Vdlp\RedirectConditionsHeader
- */
 class Plugin extends PluginBase
 {
-    /**
-     * {@inheritdoc}
-     */
     public $require = [
         'Vdlp.Redirect',
         'Vdlp.RedirectConditions',
     ];
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
-
-    /**
-     * {@inheritdoc}
-     */
     public function pluginDetails(): array
     {
         return [
@@ -39,11 +26,6 @@ class Plugin extends PluginBase
         ];
     }
 
-    /** @noinspection PhpMissingParentCallCommonInspection */
-
-    /**
-     * {@inheritdoc}
-     */
     public function boot()
     {
         /** @var RedirectManagerInterface $manager */

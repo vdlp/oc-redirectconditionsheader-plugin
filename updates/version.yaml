@@ -1,4 +1,6 @@
-1.0.0:
+v1.0.0:
     - First version of Vdlp.RedirectConditionsHeader
-1.0.1:
+v1.0.1:
     - Fix issue with parameters check
+v1.1.0:
+    - Add support for October CMS 3.0

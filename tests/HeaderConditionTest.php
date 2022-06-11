@@ -10,16 +10,8 @@ use Vdlp\RedirectConditions\Models\ConditionParameter;
 use Vdlp\RedirectConditions\Tests\Factories\RedirectRuleFactory;
 use Vdlp\RedirectConditionsHeader\Classes\HeaderCondition;
 
-/**
- * Class HeaderConditionTest
- *
- * @package Vdlp\RedirectConditionsHeader\Tests
- */
 class HeaderConditionTest extends PluginTestCase
 {
-    /**
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     */
     public function testHeaderWithRegex()
     {
         /** @var Request $request */
@@ -36,18 +28,15 @@ class HeaderConditionTest extends PluginTestCase
             'parameters' => [
                 'header' => 'Accept-Language',
                 'value' => '/(en-US|nl-NL|de-DE)/i',
-                'use_regex' => '1'
-            ]
+                'use_regex' => '1',
+            ],
         ]);
 
-        $rule = RedirectRuleFactory::createRedirectRule();
+        $rule = RedirectRuleFactory::testCreateRedirectRule();
 
         $this->assertTrue($condition->passes($rule, '/from/url'));
     }
 
-    /**
-     * @throws \PHPUnit_Framework_AssertionFailedError
-     */
     public function testHeaderWithoutRegex()
     {
         /** @var Request $request */
@@ -67,11 +56,11 @@ class HeaderConditionTest extends PluginTestCase
             'parameters' => [
                 'header' => 'User-Agent',
                 'value' => 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_1_2 like Mac OS X)',
-                'use_regex' => '0'
-            ]
+                'use_regex' => '0',
+            ],
         ]);
 
-        $rule = RedirectRuleFactory::createRedirectRule();
+        $rule = RedirectRuleFactory::testCreateRedirectRule();
 
         $this->assertTrue($condition->passes($rule, '/from/url'));
     }

@@ -6,63 +6,33 @@ namespace Vdlp\RedirectConditionsHeader\Classes;
 
 use Illuminate\Http\Request;
 use Psr\Log\LoggerInterface;
+use Throwable;
 use Vdlp\Redirect\Classes\RedirectRule;
 use Vdlp\RedirectConditions\Classes\Condition;
 
-/**
- * Class HeaderCondition
- *
- * @package Vdlp\RedirectConditionsHeader\Classes
- */
 class HeaderCondition extends Condition
 {
-    /**
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $log;
-
-    /**
-     * @param Request $request
-     * @param LoggerInterface $log
-     */
-    public function __construct(Request $request, LoggerInterface $log)
-    {
-        $this->request = $request;
-        $this->log = $log;
+    public function __construct(
+        private Request $request,
+        private LoggerInterface $log
+    ) {
     }
 
-    /**
-     * @return string
-     */
     public function getCode(): string
     {
         return 'vdlp_header';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return 'Header';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getExplanation(): string
     {
         return 'Match on HTTP header.';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function passes(RedirectRule $rule, string $requestUri): bool
     {
         $parameters = $this->getParameters($rule->getId());
@@ -86,7 +56,7 @@ class HeaderCondition extends Condition
             if ((bool) ($parameters['use_regex'] ?? false)) {
                 try {
                     return preg_match($matchValue, $headerValue) === 1;
-                } catch (\Throwable $e) {
+                } catch (Throwable) {
                     $this->log->warning(sprintf(
                         'Invalid regex %s provided for redirect ID=%d.',
                         $matchValue,
@@ -101,9 +71,6 @@ class HeaderCondition extends Condition
         return false;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getFormConfig(): array
     {
         return [
