@@ -14,7 +14,7 @@ class HeaderCondition extends Condition
 {
     public function __construct(
         private Request $request,
-        private LoggerInterface $log
+        private LoggerInterface $logger,
     ) {
     }
 
@@ -25,12 +25,12 @@ class HeaderCondition extends Condition
 
     public function getDescription(): string
     {
-        return 'Header';
+        return 'vdlp.redirectconditionsheader::lang.header.description';
     }
 
     public function getExplanation(): string
     {
-        return 'Match on HTTP header.';
+        return 'vdlp.redirectconditionsheader::lang.header.explanation';
     }
 
     public function passes(RedirectRule $rule, string $requestUri): bool
@@ -57,15 +57,19 @@ class HeaderCondition extends Condition
                 try {
                     return preg_match($matchValue, $headerValue) === 1;
                 } catch (Throwable) {
-                    $this->log->warning(sprintf(
-                        'Invalid regex %s provided for redirect ID=%d.',
-                        $matchValue,
-                        $rule->getId()
-                    ));
+                    $this->logger->warning(
+                        sprintf(
+                            'Invalid regex %s provided for redirect ID=%d.',
+                            $matchValue,
+                            $rule->getId()
+                        )
+                    );
+
+                    return false;
                 }
-            } else {
-                return strtolower($matchValue) === strtolower($headerValue);
             }
+
+            return strtolower($matchValue) === strtolower($headerValue);
         }
 
         return false;
@@ -76,24 +80,24 @@ class HeaderCondition extends Condition
         return [
             'header' => [
                 'tab' => self::TAB_NAME,
-                'label' => 'Header name',
+                'label' => 'vdlp.redirectconditionsheader::lang.header.label',
                 'type' => 'text',
                 'span' => 'left',
             ],
             'value' => [
                 'tab' => self::TAB_NAME,
-                'label' => 'Header value',
+                'label' => 'vdlp.redirectconditionsheader::lang.header.value_label',
                 'type' => 'text',
                 'span' => 'left',
             ],
             'use_regex' => [
                 'tab' => self::TAB_NAME,
-                'label' => 'Use regular expression for header value.',
-                'comment' => 'See <a href="http://php.net/manual/en/function.preg-match.php" target="_blank">preg_match</a> documentation.',
+                'label' => 'vdlp.redirectconditionsheader::lang.header.use_regex_label',
+                'comment' => 'vdlp.redirectconditionsheader::lang.header.use_regex_comment',
                 'commentHtml' => true,
                 'type' => 'checkbox',
                 'span' => 'left',
-            ]
+            ],
         ];
     }
 }

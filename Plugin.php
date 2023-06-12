@@ -8,10 +8,12 @@ use System\Classes\PluginBase;
 use Vdlp\Redirect\Classes\Contracts\RedirectManagerInterface;
 use Vdlp\RedirectConditionsHeader\Classes\HeaderCondition;
 
-class Plugin extends PluginBase
+final class Plugin extends PluginBase
 {
+    /**
+     * @inheritdoc
+     */
     public $require = [
-        'Vdlp.Redirect',
         'Vdlp.RedirectConditions',
     ];
 
@@ -26,7 +28,7 @@ class Plugin extends PluginBase
         ];
     }
 
-    public function boot()
+    public function boot(): void
     {
         /** @var RedirectManagerInterface $manager */
         $manager = resolve(RedirectManagerInterface::class);

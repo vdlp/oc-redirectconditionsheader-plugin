@@ -1,7 +1,0 @@
-include:
-    -   project: 'standards/gitlab-ci-templates'
-        ref: master
-        file: 'templates/package.yml'
-
-deploy-package:
-    extends: .deploy-package
